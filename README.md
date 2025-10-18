@@ -28,11 +28,30 @@ transitive dependency updates are applied consistently.
 
 ## Security Baseline
 
-- `security/pom.xml.sha256`: SHA-256 checksum for the published BOM.
-- `security/pom.xml.sha512`: SHA-512 checksum for the published BOM.
+The BOM enforces dependency integrity through multiple security baselines:
+
+- `security/dependency-checksums.csv`: SHA-256 checksums for all compile-scope dependencies (including transitives)
+- `security/pgp-trusted-keys.list`: Trusted PGP fingerprints for dependency verification
+- `security/pom.xml.sha256`: SHA-256 checksum for the published BOM
+- `security/pom.xml.sha512`: SHA-512 checksum for the published BOM
 
 Regenerate these files only after intentional changes to the BOM and
 before staging a release.
+
+### Updating Dependency Security Baselines
+
+Use the helper script to regenerate dependency checksums and PGP keys:
+
+```bash
+# Update baselines
+scripts/update-dependency-security.sh --update
+
+# Verify baselines are current
+scripts/update-dependency-security.sh --verify
+
+# Show all available options
+scripts/update-dependency-security.sh --help
+```
 
 ## Licensing
 
