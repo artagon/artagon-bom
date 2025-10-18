@@ -6,7 +6,7 @@
 
     <groupId>org.artagon</groupId>
     <artifactId>artagon-bom</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <packaging>pom</packaging>
 
     <name>Artagon OSS BOM</name>
