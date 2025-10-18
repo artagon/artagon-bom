@@ -30,7 +30,7 @@ transitive dependency updates are applied consistently.
 
 The BOM enforces dependency integrity through multiple security baselines:
 
-- `security/dependency-checksums.csv`: SHA-256 checksums for all compile-scope dependencies (including transitives)
+- `security/com.artagon-artagon-bom-dependency-checksums.csv`: SHA-256 checksums for all compile-scope dependencies (including transitives)
 - `security/pgp-trusted-keys.list`: Trusted PGP fingerprints for dependency verification
 - `security/pom.xml.sha256`: SHA-256 checksum for the published BOM
 - `security/pom.xml.sha512`: SHA-512 checksum for the published BOM

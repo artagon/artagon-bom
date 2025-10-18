@@ -634,7 +634,7 @@
                                 </goals>
                                 <configuration>
                                     <failIfNoFiles>false</failIfNoFiles>
-                                    <csvSummaryFile>${project.basedir}/security/dependency-checksums.csv</csvSummaryFile>
+                                    <csvSummaryFile>${project.basedir}/security/com.artagon-artagon-bom-dependency-checksums.csv</csvSummaryFile>
                                     <scopes>
                                         <scope>test</scope>
                                     </scopes>
