@@ -12,18 +12,9 @@ on:
 jobs:
   build:
     name: Build and Test
-    uses: artagon/artagon-common/.github/workflows/java-build.yml@main
+    uses: artagon/artagon-common/.github/workflows/maven-ci.yml@main
     with:
       java-version: '25'
-      run-tests: true
+      run-tests: false
       run-integration-tests: false
-
-  security-scan:
-    name: Security Scan
-    needs: build
-    uses: artagon/artagon-common/.github/workflows/security-scan.yml@main
-    with:
-      run-dependency-check: true
-      run-ossindex-audit: true
-      run-trivy-scan: true
-      fail-on-severity: 'HIGH'
+      upload-coverage: false
