@@ -565,6 +565,22 @@
 
     <profiles>
         <profile>
+            <id>github-deploy</id>
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub Packages</name>
+                    <url>https://maven.pkg.github.com/artagon/artagon-bom</url>
+                </repository>
+                <snapshotRepository>
+                    <id>github</id>
+                    <name>GitHub Packages</name>
+                    <url>https://maven.pkg.github.com/artagon/artagon-bom</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+
+        <profile>
             <id>ossrh-deploy</id>
             <build>
                 <plugins>
