@@ -615,6 +615,30 @@
                         </executions>
                     </plugin>
 
+                    <!-- Verify Security File Checksums -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.5.0</version>
+                        <executions>
+                            <execution>
+                                <id>verify-security-file-checksums</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${project.basedir}/.common/artagon-common/scripts/security/verify-checksums.sh</executable>
+                                    <arguments>
+                                        <argument>--security-dir</argument>
+                                        <argument>${project.basedir}/security</argument>
+                                        <argument>com.artagon-artagon-bom-dependency-checksums.csv</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                     <!-- Verify Dependency Checksums (including transitive) -->
                     <plugin>
                         <groupId>net.nicoulaj.maven.plugins</groupId>
