@@ -17,4 +17,3 @@ jobs:
       java-version: '25'
       run-tests: false
       run-integration-tests: false
-      upload-coverage: false
