@@ -12,7 +12,7 @@ on:
 jobs:
   build:
     name: Build and Test
-    uses: artagon/artagon-common/.github/workflows/maven-ci.yml@main
+    uses: artagon/artagon-workflows/.github/workflows/maven_build.yml@main
     with:
       java-version: '25'
       run-tests: false
