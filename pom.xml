@@ -628,7 +628,7 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>${project.basedir}/.common/artagon-common/scripts/security/verify-checksums.sh</executable>
+                                    <executable>${project.basedir}/.common/artagon-common/scripts/security/mvn_verify_checksums.sh</executable>
                                     <arguments>
                                         <argument>--security-dir</argument>
                                         <argument>${project.basedir}/security</argument>
