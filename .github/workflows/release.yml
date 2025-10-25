@@ -10,8 +10,19 @@ on:
       - 'bom-v*'
 
 jobs:
+  security-scan:
+    name: Security Vulnerability Scan
+    uses: artagon/artagon-workflows/.github/workflows/maven_security_scan.yml@main
+    with:
+      java-version: '25'
+      run-dependency-check: true
+      run-ossindex-audit: true
+      run-trivy-scan: true
+      fail-on-severity: 'HIGH'
+
   release:
     name: Release to Maven Central
+    needs: security-scan
     uses: artagon/artagon-workflows/.github/workflows/maven-central-release.yml@main
     with:
       java-version: '25'
