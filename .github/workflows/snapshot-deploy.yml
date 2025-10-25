@@ -36,7 +36,7 @@ jobs:
     uses: artagon/artagon-workflows/.github/workflows/maven_deploy.yml@main
     with:
       java-version: '25'
-      deploy-profile: 'ossrh-deploy,artagon-oss-release'
+      deploy-profile: 'ossrh-deploy'
       skip-tests: true
     secrets:
       OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
