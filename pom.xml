@@ -21,9 +21,10 @@
 
     <licenses>
         <license>
-            <name>The GNU Lesser General Public License, Version 3.0</name>
-            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+            <name>GNU Affero General Public License v3.0</name>
+            <url>https://www.gnu.org/licenses/agpl-3.0.txt</url>
             <distribution>repo</distribution>
+            <comments>Open source option - see LICENSE file for dual licensing details</comments>
         </license>
     </licenses>
 
@@ -142,6 +143,9 @@
 
         <!-- Code Quality -->
         <spotbugs.version>4.9.3</spotbugs.version>
+        <central-publishing-maven-plugin.version>0.6.0</central-publishing-maven-plugin.version>
+        <checksum-maven-plugin.version>1.11</checksum-maven-plugin.version>
+        <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -524,7 +528,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>${maven-release-plugin.version}</version>
                     <configuration>
                         <autoVersionSubmodules>true</autoVersionSubmodules>
                         <useReleaseProfile>false</useReleaseProfile>
@@ -542,7 +546,7 @@
             <plugin>
                 <groupId>net.nicoulaj.maven.plugins</groupId>
                 <artifactId>checksum-maven-plugin</artifactId>
-                <version>1.11</version>
+                <version>${checksum-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>generate-bom-checksums</id>
@@ -643,7 +647,7 @@
                     <plugin>
                         <groupId>net.nicoulaj.maven.plugins</groupId>
                         <artifactId>checksum-maven-plugin</artifactId>
-                        <version>1.11</version>
+                        <version>${checksum-maven-plugin.version}</version>
                         <executions>
                             <!-- Skip checksum-artifacts execution -->
                             <execution>
@@ -675,7 +679,7 @@
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.6.0</version>
+                        <version>${central-publishing-maven-plugin.version}</version>
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
