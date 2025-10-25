@@ -675,7 +675,7 @@
                         </executions>
                     </plugin>
 
-                    <!-- OSSRH Nexus Staging (for both snapshots and releases to OSSRH) -->
+                    <!-- OSSRH Nexus Staging (handles OSSRH deployments, typically for snapshots; release versions are published via Central Portal using central-publishing-maven-plugin) -->
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
