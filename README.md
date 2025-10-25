@@ -38,6 +38,17 @@ The BOM enforces dependency integrity through multiple security baselines:
 Regenerate these files only after intentional changes to the BOM and
 before staging a release.
 
+### Automated CVE Scanning
+
+Every release is automatically scanned for known security vulnerabilities before deployment. The release workflow performs comprehensive security analysis using:
+
+- **OWASP Dependency-Check**: Identifies CVEs in project dependencies with CVSS scoring
+- **Sonatype OSS Index**: Cross-references dependencies against vulnerability databases
+- **Trivy**: Performs filesystem scanning for security issues
+- **SpotBugs**: Analyzes bytecode for security-related code defects
+
+The release process will **fail automatically** if any HIGH or CRITICAL severity vulnerabilities are detected. Security scan results are uploaded to GitHub Security tab and retained as workflow artifacts for 30 days.
+
 ### Updating Dependency Security Baselines
 
 Use the helper script to regenerate dependency checksums and PGP keys:
