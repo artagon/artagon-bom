@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.artagon"
-version = "1.0.9-SNAPSHOT"
+version = "1.0.9"
 
 description = "Bill of Materials for managing dependency versions across the Artagon stack."
 
