@@ -3,11 +3,15 @@
  * Gradle platform for managing dependency versions across the Artagon stack
  */
 
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     `java-platform`
     `maven-publish`
     signing
     id("org.cyclonedx.bom") version "1.10.0"
+    id("com.vanniktech.maven.publish") version "0.30.0"
 }
 
 group = "com.artagon"
@@ -122,83 +126,46 @@ tasks.cyclonedxBom {
     includeConfigs.set(listOf("runtimeClasspath"))
 }
 
-// Publishing configuration
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["javaPlatform"])
+// Maven Central publishing via vanniktech plugin
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
+    signAllPublications()
 
-            pom {
-                name.set("Artagon OSS BOM")
-                description.set("Bill of Materials for managing dependency versions across the Artagon stack.")
-                url.set("https://github.com/artagon")
-                inceptionYear.set("2025")
+    coordinates("com.artagon", "artagon-bom", version.toString())
 
-                licenses {
-                    license {
-                        name.set("GNU Affero General Public License v3.0")
-                        url.set("https://www.gnu.org/licenses/agpl-3.0.txt")
-                        distribution.set("repo")
-                        comments.set("Open source option - see LICENSE file for dual licensing details")
-                    }
-                }
+    pom {
+        name.set("Artagon OSS BOM")
+        description.set("Bill of Materials for managing dependency versions across the Artagon stack.")
+        url.set("https://github.com/artagon/artagon-bom")
+        inceptionYear.set("2025")
 
-                developers {
-                    developer {
-                        id.set("giedrius")
-                        name.set("Giedrius Trumpickas")
-                        email.set("trumpyla at artagon dot com")
-                        roles.set(listOf("Founder"))
-                        timezone.set("+5")
-                    }
-                }
-
-                organization {
-                    name.set("Artagon")
-                    url.set("https://github.com/artagon")
-                }
-
-                scm {
-                    connection.set("scm:git:https://github.com/artagon/artagon-bom.git")
-                    developerConnection.set("scm:git:ssh://git@github.com/artagon/artagon-bom.git")
-                    url.set("https://github.com/artagon/artagon-bom")
-                }
-
-                issueManagement {
-                    system.set("GitHub Issues")
-                    url.set("https://github.com/artagon/artagon-bom/issues")
-                }
+        licenses {
+            license {
+                name.set("GNU Affero General Public License v3.0")
+                url.set("https://www.gnu.org/licenses/agpl-3.0.txt")
+                distribution.set("repo")
             }
         }
-    }
 
-    repositories {
-        maven {
-            name = "CentralPortal"
-            url = uri("https://central.sonatype.com/api/v1/publisher/upload")
-
-            credentials {
-                username = providers.environmentVariable("OSSRH_USERNAME").orNull
-                password = providers.environmentVariable("OSSRH_PASSWORD").orNull
+        developers {
+            developer {
+                id.set("giedrius")
+                name.set("Giedrius Trumpickas")
+                email.set("trumpyla@gmail.com")
             }
+        }
+
+        scm {
+            url.set("https://github.com/artagon/artagon-bom")
+            connection.set("scm:git:git://github.com/artagon/artagon-bom.git")
+            developerConnection.set("scm:git:ssh://git@github.com/artagon/artagon-bom.git")
         }
     }
 }
 
-// Signing configuration
-signing {
-    val signingKey = providers.environmentVariable("GPG_PRIVATE_KEY").orNull
-    val signingPassword = providers.environmentVariable("GPG_PASSPHRASE").orNull
-
-    // Only sign if keys are provided
-    isRequired = signingKey != null && signingPassword != null
-
-    if (signingKey != null && signingPassword != null) {
-        useInMemoryPgpKeys(signingKey, signingPassword)
-    }
-
-    sign(publishing.publications["maven"])
-}
+// Signing is handled by mavenPublishing plugin using environment variables:
+// - ORG_GRADLE_PROJECT_signingInMemoryKey (GPG private key)
+// - ORG_GRADLE_PROJECT_signingInMemoryKeyPassword (GPG passphrase)
 
 // Reproducible builds
 tasks.withType<AbstractArchiveTask>().configureEach {
