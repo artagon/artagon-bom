@@ -11,7 +11,7 @@ on:
 
 jobs:
   update-submodule:
-    uses: artagon/artagon-workflows/.github/workflows/update-submodule.yml@main
+    uses: artagon/artagon-workflows/.github/workflows/update_submodule.yml@main
     permissions:
       contents: write
       pull-requests: write
