@@ -29,9 +29,22 @@ jobs:
             echo "✗ Version is not SNAPSHOT ($VERSION), skipping deployment"
           fi
 
+  sbom:
+    name: Generate Snapshot SBOM
+    needs: check-version
+    if: needs.check-version.outputs.is-snapshot == 'true'
+    uses: artagon/artagon-workflows/.github/workflows/maven_sbom_generate.yml@main
+    permissions:
+      contents: read
+      id-token: write
+    with:
+      java-version: '25'
+      validate-sbom: true
+      sign-sbom: true
+
   deploy-snapshot:
     name: Deploy Snapshot to OSSRH
-    needs: check-version
+    needs: [check-version, sbom]
     if: needs.check-version.outputs.is-snapshot == 'true'
     uses: artagon/artagon-workflows/.github/workflows/maven_deploy.yml@main
     with:
