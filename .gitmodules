@@ -1,3 +1,7 @@
 [submodule ".common/artagon-common"]
 	path = .common/artagon-common
 	url = git@github.com:artagon/artagon-common.git
+[submodule ".legal/artagon-license"]
+	path = .legal/artagon-license
+	url = git@github.com:artagon/artagon-license.git
+	branch = main
