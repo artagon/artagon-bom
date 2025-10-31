@@ -1,4 +1,4 @@
-# Release Workflow for artagon-bom
+# Release Workflow for artagon-bom (Gradle)
 # Triggered on version tags to release to Maven Central
 
 name: Release to Maven Central
@@ -10,46 +10,23 @@ on:
       - 'bom-v*'
 
 jobs:
-  build:
-    name: Build and Validate
-    uses: artagon/artagon-workflows/.github/workflows/maven_build.yml@main
-    with:
-      java-version: '25'
-      run-tests: false
-      run-integration-tests: false
-
-  sbom:
-    name: Generate SBOM
-    needs: build
-    uses: artagon/artagon-workflows/.github/workflows/maven_sbom_generate.yml@main
-    permissions:
-      contents: read
-      id-token: write
-    with:
-      java-version: '25'
-      validate-sbom: true
-      convert-to-spdx: true
-      sign-sbom: true
-
-  security-scan:
-    name: Security Vulnerability Scan
-    needs: build
-    uses: artagon/artagon-workflows/.github/workflows/maven_security_scan.yml@main
-    with:
-      java-version: '25'
-      run-dependency-check: true
-      run-ossindex-audit: true
-      run-trivy-scan: true
-      fail-on-severity: 'HIGH'
-
   release:
     name: Release to Maven Central
-    needs: [sbom, security-scan]
-    uses: artagon/artagon-workflows/.github/workflows/maven_central_release.yml@main
+    uses: artagon/artagon-workflows/.github/workflows/gradle_release.yml@main
+    permissions:
+      contents: write
+      packages: write
+      id-token: write
+      attestations: write
     with:
       java-version: '25'
-      maven-profile: 'ossrh-deploy'
+      verify-wrapper: true
+      generate-sbom: false        # BOM projects define constraints, not dependencies
+      validate-sbom: false
+      convert-to-spdx: false
+      sign-sbom: false
       create-github-release: true
+      publish-artifacts: true
     secrets:
       OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
       OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
