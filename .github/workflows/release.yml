@@ -10,8 +10,17 @@ on:
       - 'bom-v*'
 
 jobs:
+  build:
+    name: Build and Validate
+    uses: artagon/artagon-workflows/.github/workflows/maven_build.yml@main
+    with:
+      java-version: '25'
+      run-tests: false
+      run-integration-tests: false
+
   security-scan:
     name: Security Vulnerability Scan
+    needs: build
     uses: artagon/artagon-workflows/.github/workflows/maven_security_scan.yml@main
     with:
       java-version: '25'
@@ -23,7 +32,7 @@ jobs:
   release:
     name: Release to Maven Central
     needs: security-scan
-    uses: artagon/artagon-workflows/.github/workflows/maven-central-release.yml@main
+    uses: artagon/artagon-workflows/.github/workflows/maven_central_release.yml@main
     with:
       java-version: '25'
       maven-profile: 'ossrh-deploy'
