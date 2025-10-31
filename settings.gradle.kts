@@ -12,6 +12,7 @@ pluginManagement {
 
     plugins {
         id("org.cyclonedx.bom") version "1.10.0"
+        id("com.vanniktech.maven.publish") version "0.30.0"
     }
 }
 
