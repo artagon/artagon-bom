@@ -21,14 +21,10 @@ jobs:
     with:
       java-version: '25'
       verify-wrapper: true
-      generate-sbom: false        # BOM projects define constraints, not dependencies
-      validate-sbom: false
-      convert-to-spdx: false
-      sign-sbom: false
+      generate-sbom: true         # Enable SBOM for releases
+      validate-sbom: true
+      convert-to-spdx: true
+      sign-sbom: true             # Enable Sigstore signing
       create-github-release: true
       publish-artifacts: true
-    secrets:
-      OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-      OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-      GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+    secrets: inherit
