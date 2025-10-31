@@ -12,9 +12,11 @@ on:
 jobs:
   update-submodule:
     uses: artagon/artagon-workflows/.github/workflows/update-submodule.yml@main
+    permissions:
+      contents: write
+      pull-requests: write
     with:
       submodule-path: .common/artagon-common
       branch: main
       create-pr: true
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit
