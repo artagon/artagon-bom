@@ -7,8 +7,7 @@ plugins {
     `java-platform`
     `maven-publish`
     signing
-    // CycloneDX SBOM - configured separately for platform projects
-    // id("org.cyclonedx.bom")
+    id("org.cyclonedx.bom") version "1.10.0"
 }
 
 group = "com.artagon"
@@ -109,17 +108,19 @@ dependencies {
 }
 
 // CycloneDX SBOM configuration
-// Note: java-platform projects don't have dependencies in the traditional sense
-// SBOM generation is handled via workflow
-// cyclonedxBom {
-//     schemaVersion.set("1.6")
-//     projectType.set("library")
-//     includeBomSerialNumber.set(true)
-//     includeLicenseText.set(true)
-//     outputFormat.set("all")
-//     outputName.set("bom")
-//     destination.set(file("build/reports"))
-// }
+// For BOM projects, we document the managed dependency constraints
+tasks.cyclonedxBom {
+    schemaVersion.set("1.6")
+    projectType.set("library")
+    includeBomSerialNumber.set(true)
+    includeLicenseText.set(true)
+    outputFormat.set("all")
+    outputName.set("bom")
+    destination.set(file("build/reports"))
+
+    // Include metadata about the BOM itself
+    includeConfigs.set(listOf("runtimeClasspath"))
+}
 
 // Publishing configuration
 publishing {
@@ -207,7 +208,7 @@ tasks.withType<AbstractArchiveTask>().configureEach {
     isReproducibleFileOrder = true
 }
 
-// SBOM generation handled via CI workflow for platform projects
-// tasks.named("build") {
-//     dependsOn("cyclonedxBom")
-// }
+// Include SBOM generation in build process
+tasks.named("build") {
+    dependsOn("cyclonedxBom")
+}
