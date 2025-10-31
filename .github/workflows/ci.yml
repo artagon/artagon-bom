@@ -15,8 +15,8 @@ jobs:
     uses: artagon/artagon-workflows/.github/workflows/gradle_build.yml@main
     with:
       java-version: '25'
-      gradle-args: 'build'        # BOM projects only need to build (assemble + check)
+      gradle-args: ''             # Let workflow use default tasks without modifications
       verify-wrapper: true
       verify-dependencies: false  # BOM projects manage constraints, not direct dependencies
       check-lockfiles: false      # Platform projects don't use traditional lockfiles
-      run-tests: false            # BOM projects don't have tests
+      run-tests: true             # Set to true to avoid -x test flag that breaks on missing test task
