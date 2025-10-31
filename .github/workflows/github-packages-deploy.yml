@@ -13,8 +13,9 @@ on:
 jobs:
   deploy-github-packages:
     name: Deploy to GitHub Packages
-    uses: artagon/artagon-workflows/.github/workflows/maven-github-release.yml@main
+    uses: artagon/artagon-workflows/.github/workflows/maven_github_release.yml@main
     with:
       java-version: '25'
       maven-profile: 'github-deploy'
       create-github-release: false
+    secrets: inherit

@@ -23,7 +23,7 @@ jobs:
   release:
     name: Release to Maven Central
     needs: security-scan
-    uses: artagon/artagon-workflows/.github/workflows/maven-central-release.yml@main
+    uses: artagon/artagon-workflows/.github/workflows/maven_central_release.yml@main
     with:
       java-version: '25'
       maven-profile: 'ossrh-deploy'
