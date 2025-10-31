@@ -18,6 +18,19 @@ jobs:
       run-tests: false
       run-integration-tests: false
 
+  sbom:
+    name: Generate SBOM
+    needs: build
+    uses: artagon/artagon-workflows/.github/workflows/maven_sbom_generate.yml@main
+    permissions:
+      contents: read
+      id-token: write
+    with:
+      java-version: '25'
+      validate-sbom: true
+      convert-to-spdx: true
+      sign-sbom: true
+
   security-scan:
     name: Security Vulnerability Scan
     needs: build
@@ -31,7 +44,7 @@ jobs:
 
   release:
     name: Release to Maven Central
-    needs: security-scan
+    needs: [sbom, security-scan]
     uses: artagon/artagon-workflows/.github/workflows/maven_central_release.yml@main
     with:
       java-version: '25'
