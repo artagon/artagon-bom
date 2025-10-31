@@ -1,13 +1,10 @@
 # GitHub Packages Deployment Workflow for artagon-bom
 # Deploys to GitHub Maven Packages
+# Manual deployment only to avoid conflicts with release.yml
 
 name: Deploy to GitHub Packages
 
 on:
-  push:
-    tags:
-      - 'v*'
-      - 'bom-v*'
   workflow_dispatch:
 
 jobs:
