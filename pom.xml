@@ -586,6 +586,41 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- CycloneDX SBOM Generation -->
+            <plugin>
+                <groupId>org.cyclonedx</groupId>
+                <artifactId>cyclonedx-maven-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>make-aggregate-bom</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>makeAggregateBom</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <schemaVersion>1.6</schemaVersion>
+                    <projectType>library</projectType>
+                    <includeBomSerialNumber>true</includeBomSerialNumber>
+                    <includeLicenseText>true</includeLicenseText>
+
+                    <!-- Scope configuration -->
+                    <includeCompileScope>true</includeCompileScope>
+                    <includeProvidedScope>true</includeProvidedScope>
+                    <includeRuntimeScope>true</includeRuntimeScope>
+                    <includeSystemScope>true</includeSystemScope>
+                    <includeTestScope>false</includeTestScope>
+
+                    <!-- Output configuration -->
+                    <outputReactorProjects>true</outputReactorProjects>
+                    <outputFormat>all</outputFormat>
+                    <outputName>bom</outputName>
+                    <outputDirectory>${project.build.directory}/sbom</outputDirectory>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
