@@ -39,13 +39,13 @@ jobs:
       - name: Build and generate SBOM
         run: ./gradlew clean build cyclonedxBom --no-daemon -Dorg.gradle.dependency.verification=off
 
-      - name: Publish to Maven Central
+      - name: Publish to Maven Central via Central Portal
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-        run: ./gradlew publish --no-daemon -Dorg.gradle.dependency.verification=off
+        run: ./gradlew publishAllPublicationsToCentralPortalRepository --no-daemon -Dorg.gradle.dependency.verification=off
 
       - name: Install Cosign
         uses: sigstore/cosign-installer@dc72c7d5c4d10cd6bcb8cf6e3fd625a9e5e537da
